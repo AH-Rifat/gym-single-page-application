@@ -11,7 +11,7 @@ class Member extends Component
 {
     public $name, $email, $dob, $age, $height, $weight, $work, $bloodGroup, $gender, $address,
         $mobile, $nationalId, $photo, $package, $total, $paid, $due;
-    public $edit;
+    public $editId;
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $rules = [
@@ -36,7 +36,7 @@ class Member extends Component
 
     public function render()
     {
-        $members = ModelsMember::orderBy('id', 'DESC')->paginate(5);
+        $members = ModelsMember::orderBy('id', 'DESC')->paginate(3);
         return view('livewire.member', ['members' => $members]);
     }
 
@@ -72,15 +72,34 @@ class Member extends Component
 
     public function edit($var)
     {
-        $this->edit = ModelsMember::where('id', $var)->get();
+        $member = ModelsMember::where('id', $var)->first();
+        $this->editId     = $member->id;
+        $this->name       = $member->name;
+        $this->email      = $member->email;
+        $this->dob        = $member->dob;
+        $this->age        = $member->age;
+        $this->height     = $member->height;
+        $this->weight     = $member->weight;
+        $this->work       = $member->work;
+        $this->bloodGroup = $member->bloodGroup;
+        $this->gender     = $member->gender;
+        $this->address    = $member->address;
+        $this->mobile     = $member->mobile;
+        $this->nationalId = $member->nationalId;
+        $this->photo      = $member->photo;
+        $this->package    = $member->package;
+        $this->total      = $member->total;
+        $this->paid       = $member->paid;
+        $this->due        = $member->due;
     }
 
-    public function update($var)
+    public function MemberUpdate($var)
     {
+        // dd($var);
         $this->validate();
-        $this->edit = ModelsMember::where('id', $var)->update();
+        $member = ModelsMember::find($var);
+        $member->update($this->all());
         session()->flash('success', 'Successfully Updated');
-        // dd($this->edit);
     }
 
     public function deleteMember($id)

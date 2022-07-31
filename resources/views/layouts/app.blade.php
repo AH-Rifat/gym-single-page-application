@@ -70,49 +70,31 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
-                    <li class="menu-item">
-                        <a href="index.html" class="menu-link">
+                    <li class="menu-item {{ (request()->is('/')) ? 'active' : '' }}"> 
+                        <a href="/" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Home</div>
+                            <div data-i18n="Home">Home</div>
                         </a>
                     </li>
 
-                    <li class="menu-item">
+                    <li class="menu-item {{ (request()->is('registration')) ? 'active' : '' }}">
                         <a href="/registration" class="menu-link">
                             <i class='menu-icon tf-icons bx bx-user-plus'></i>
-                            <div data-i18n="Analytics">Registration</div>
+                            <div data-i18n="Registration">Registration</div>
                         </a>
                     </li>
                     <!-- section1 -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <li class="menu-item {{ (request()->is('attendance')) ? 'active' : '' }}">
+                        <a href="/attendance" class="menu-link">
                             <i class='menu-icon tf-icons bx bxs-calendar'></i>
-                            <div data-i18n="Layouts">Attendance</div>
+                            <div data-i18n="Attendance">Attendance</div>
                         </a>
-
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="" class="menu-link">
-                                    <div data-i18n="Without menu">Add Attendance</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="" class="menu-link">
-                                    <div data-i18n="Without navbar">Attendance History</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="" class="menu-link">
-                                    <div data-i18n="Without navbar">Members Profile</div>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <!-- section2 -->
-                    <li class="menu-item">
+                    <li class="menu-item {{ (request()->is('sms')) ? 'active' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class='menu-icon tf-icons bx bx-envelope'></i>
-                            <div data-i18n="Layouts">SMS</div>
+                            <div data-i18n="SMS">SMS</div>
                         </a>
 
                         <ul class="menu-sub">
@@ -129,8 +111,8 @@
                         </ul>
                     </li>
                     <!-- section3 -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <li class="menu-item {{ (request()->is('payment' ,'payment_list')) ? 'active' : '' }}">
+                        <a href="payment" class="menu-link menu-toggle">
                             <i class='menu-icon tf-icons bx bx-money'></i>
                             <div data-i18n="Layouts">Payment</div>
                         </a>
@@ -142,14 +124,14 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="" class="menu-link">
+                                <a href="/payment_list" class="menu-link">
                                     <div data-i18n="Without navbar">Payment List</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <!-- section4 -->
-                    <li class="menu-item">
+                    <li class="menu-item {{ (request()->is('account')) ? 'active' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class='menu-icon tf-icons bx bxs-user-account'></i>
                             <div data-i18n="Layouts">Accounts</div>
@@ -174,20 +156,20 @@
                         </ul>
                     </li>
                     <!-- section5 -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <li class="menu-item {{ (request()->is('package','manage_package')) ? 'active' : '' }}">
+                        <a href="package" class="menu-link menu-toggle">
                             <i class='menu-icon tf-icons bx bx-package'></i>
                             <div data-i18n="Layouts">Packages</div>
                         </a>
 
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="" class="menu-link">
+                                <a href="/package" class="menu-link">
                                     <div data-i18n="Without menu">Add Package</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="" class="menu-link">
+                                <a href="/manage_package" class="menu-link">
                                     <div data-i18n="Without navbar">Member Package List</div>
                                 </a>
                             </li>
