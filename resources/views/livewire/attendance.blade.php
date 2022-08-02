@@ -1,55 +1,47 @@
-<div>
+<div> 
     <div class="row">
-        <div class="col-xl-12">
-            <div class="nav-align-top mb-4">
-                <ul class="nav nav-pills mb-3" role="tablist">
-                    <li class="nav-item">
-                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                            data-bs-target="#add-attendance" aria-controls="add-attendance" aria-selected="true">
-                            Add Attendance
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                            data-bs-target="#navs-pills-top-profile" aria-controls="navs-pills-top-profile"
-                            aria-selected="false">
-                            Find Member History
-                        </button>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="add-attendance" role="tabpanel">
-                        <form class="row d-flex align-self-center">
-                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                <label class="form-label">Member ID</label>
-                                <input type="number" class="form-control" placeholder="Enter Member ID">
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                <label class="form-label">Date</label>
-                                <input type="date" class="form-control">
-                            </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                                <label class="form-label"> </label>
-                                <button type="submit" class="btn btn-primary fw-bold form-control mt-2 ms-1">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
-                        <form class="row d-flex align-self-center">
-                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                <label class="form-label">Member ID</label>
-                                <input type="number" class="form-control" placeholder="Enter Member ID">
-                            </div>
-                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                <label class="form-label">Date</label>
-                                <input type="date" class="form-control">
-                            </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                                <label class="form-label"> </label>
-                                <button type="submit" class="btn btn-success fw-bold fs-5 form-control mt-1 ms-1">Find</button>
-                            </div>
-                        </form>
-                    </div>
+        <div class="col-xl-12 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Attendence</h3>
+                </div>
+                <div class="card-body">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ session()->get('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session()->has('danger'))
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            {{ session()->get('danger') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+                    <form class="row d-flex align-self-center" wire:submit.prevent="store">
+                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <label class="form-label">Member ID</label>
+                            <input type="number" class="form-control @error('member_id') is-invalid @enderror"
+                                wire:model.lazy="member_id" placeholder="Enter Member ID">
+                            @error('member_id')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-control @error('date') is-invalid @enderror"
+                                wire:model.lazy="date">
+                            @error('date')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                            <label class="form-label"> </label>
+                            <button type="submit" class="btn btn-primary fw-bold form-control mt-2 ms-1">Save
+                                Attendance</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -57,33 +49,44 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <h5 class="card-header">Members Attendance</h5>
+                <div class="card-header d-flex justify-content-between">
+                    <h5>Members Attendance</h5>
+                    <a href="/find_attendance" class="btn btn-primary" >Find</a>
+                </div>
                 <div class="table-responsive text-nowrap">
                     <table class="table table-hover text-center">
                         <thead class="table-primary">
                             <tr>
                                 <th>Date</th>
+                                <th>Member Id</th>
                                 <th>Member Name</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            <tr>
-                                <td>07-02-2022</td>
-                                <td>Albert Cook</td>
-                                <td><span class="badge bg-label-primary me-1">Present</span></td>
-                                <td>
-                                    <button type="button" class="btn btn-icon btn-info">
+                            @foreach ($data as $item)
+                                <tr>
+                                    <td>{{ $item->date }}</td>
+                                    <td>{{ $item->member_id }}</td>
+                                    <td>{{ $item->memberTable->name }}</td>
+                                    <td><span class="badge bg-label-primary me-1">Present</span></td>
+                                    <td>
+                                        {{-- <button type="button" class="btn btn-icon btn-info">
                                         <span class="tf-icons bx bx-edit-alt"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-icon btn-danger ms-3">
-                                        <span class="tf-icons bx bx-trash"></span>
-                                    </button>
-                                </td>
-                            </tr>
+                                    </button> --}}
+                                        <button type="button" class="btn btn-icon btn-danger ms-3"
+                                            wire:click.lazy="deleteAttendance({{ $item->id }})">
+                                            <span class="tf-icons bx bx-trash"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
+                    <div class="ms-5 mt-4">
+                        {{ $data->links() }}
+                    </div>
                 </div>
             </div>
         </div>

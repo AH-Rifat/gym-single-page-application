@@ -131,7 +131,7 @@
                         </ul>
                     </li>
                     <!-- section4 -->
-                    <li class="menu-item {{ (request()->is('account')) ? 'active' : '' }}">
+                    <li class="menu-item {{ (request()->is('expance','reports')) ? 'active' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class='menu-icon tf-icons bx bxs-user-account'></i>
                             <div data-i18n="Layouts">Accounts</div>
@@ -139,38 +139,13 @@
 
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="" class="menu-link">
+                                <a href="/expance" class="menu-link">
                                     <div data-i18n="Without menu">Add Expence</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="" class="menu-link">
-                                    <div data-i18n="Without navbar">Dues Amount</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="" class="menu-link">
-                                    <div data-i18n="Without navbar">Revenue</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- section5 -->
-                    <li class="menu-item {{ (request()->is('package','manage_package')) ? 'active' : '' }}">
-                        <a href="package" class="menu-link menu-toggle">
-                            <i class='menu-icon tf-icons bx bx-package'></i>
-                            <div data-i18n="Layouts">Packages</div>
-                        </a>
-
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="/package" class="menu-link">
-                                    <div data-i18n="Without menu">Add Package</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="/manage_package" class="menu-link">
-                                    <div data-i18n="Without navbar">Member Package List</div>
+                                <a href="/reports" class="menu-link">
+                                    <div data-i18n="Without navbar">All Reports</div>
                                 </a>
                             </li>
                         </ul>
