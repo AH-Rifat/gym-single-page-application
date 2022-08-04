@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-xl col-sm col-md">
         @include('errorMgs')
+        @include('toastrMgs')
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Edit Member Details</h5>

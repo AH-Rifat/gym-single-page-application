@@ -19,8 +19,8 @@ class FindAttendance extends Component
 
     public function render()
     {
-        $d = Attendance::whereMonth('date', $this->month)->orWhereYear('date', $this->year)->orWhere('member_id', $this->member_id)->orderBy('id','DESC')->paginate(20);
-        return view('livewire.find-attendance', compact('d'));
+        $data = Attendance::whereMonth('date', $this->month)->orWhereYear('date', $this->year)->orWhere('member_id', $this->member_id)->orderBy('id','DESC')->paginate(20);
+        return view('livewire.find-attendance', compact('data'));
     }
 
 }

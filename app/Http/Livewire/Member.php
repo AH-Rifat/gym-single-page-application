@@ -11,7 +11,7 @@ class Member extends Component
 {
     public $name, $email, $dob, $age, $height, $weight, $work, $bloodGroup, $gender, $address,
         $mobile, $nationalId, $photo, $package, $total, $paid, $due;
-    public $editId;
+    public $editId, $memberIdForDelete;
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $rules = [
@@ -104,7 +104,13 @@ class Member extends Component
 
     public function deleteMember($id)
     {
-        ModelsMember::where('id', $id)->delete();
+        $this->memberIdForDelete = $id;
+    }
+
+    public function deleteMemberInfo()
+    {
+        ModelsMember::where('id', $this->memberIdForDelete)->delete();
+        $this->emit('closeModel');
         session()->flash('danger', 'Successfully Member Deleted');
     }
 }

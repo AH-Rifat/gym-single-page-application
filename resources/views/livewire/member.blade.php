@@ -6,6 +6,7 @@
             <!-- Basic Layout -->
             <div class="col-xxl">
                 @include('errorMgs')
+                @include('toastrMgs')
                 <div class="card">
                     <h5 class="card-header">
                         <div class="d-flex justify-content-between">
@@ -76,7 +77,7 @@
             </div>
     @endif
     {{-- Delete Modal --}}
-    <div class="modal fade" id="deleteModal1" data-bs-backdrop="static" tabindex="-1">
+    <div wire:ignore.self class="modal fade" id="deleteModal" data-bs-backdrop="static" tabindex="-1">
         <div class="modal-dialog">
             <form class="modal-content">
                 <div class="modal-header">
@@ -94,7 +95,7 @@
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="button" wire:click.prevent="deleteMemberInfo" class="btn btn-danger">Delete</button>
                 </div>
             </form>
         </div>

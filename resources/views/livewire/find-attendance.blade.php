@@ -42,18 +42,21 @@
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            @foreach ($d as $item)
+                            @forelse ($data as $item)
                                 <tr>
                                     <td>{{ $item->date }}</td>
                                     <td>{{ $item->member_id }}</td>
                                     <td>{{ $item->memberTable->name }}</td>
                                     <td><span class="badge bg-label-primary me-1">Present</span></td>
                                 </tr>
-                            @endforeach
+                                @empty
+                                <tr><td>No Result</td></tr>
+                            @endforelse
                         </tbody>
                     </table>
-                    <div class="ms-5 mt-4">
-                        {{ $d->links() }}
+                    <div class="m-4">
+                        <hr>
+                        {{ $data->links() }}
                     </div>
                 </div>
             </div>

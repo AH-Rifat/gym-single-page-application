@@ -35,6 +35,7 @@
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
     <!-- Page CSS -->
 
@@ -70,28 +71,28 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
-                    <li class="menu-item {{ (request()->is('/')) ? 'active' : '' }}"> 
+                    <li class="menu-item {{ request()->is('/') ? 'active' : '' }}">
                         <a href="/" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Home">Home</div>
                         </a>
                     </li>
 
-                    <li class="menu-item {{ (request()->is('registration')) ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->is('registration') ? 'active' : '' }}">
                         <a href="/registration" class="menu-link">
                             <i class='menu-icon tf-icons bx bx-user-plus'></i>
                             <div data-i18n="Registration">Registration</div>
                         </a>
                     </li>
                     <!-- section1 -->
-                    <li class="menu-item {{ (request()->is('attendance')) ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->is('attendance') ? 'active' : '' }}">
                         <a href="/attendance" class="menu-link">
                             <i class='menu-icon tf-icons bx bxs-calendar'></i>
                             <div data-i18n="Attendance">Attendance</div>
                         </a>
                     </li>
                     <!-- section2 -->
-                    <li class="menu-item {{ (request()->is('sms')) ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->is('sms') ? 'active' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class='menu-icon tf-icons bx bx-envelope'></i>
                             <div data-i18n="SMS">SMS</div>
@@ -111,7 +112,7 @@
                         </ul>
                     </li>
                     <!-- section3 -->
-                    <li class="menu-item {{ (request()->is('payment' ,'payment_list')) ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->is('payment', 'payment_list') ? 'active' : '' }}">
                         <a href="payment" class="menu-link menu-toggle">
                             <i class='menu-icon tf-icons bx bx-money'></i>
                             <div data-i18n="Layouts">Payment</div>
@@ -131,7 +132,7 @@
                         </ul>
                     </li>
                     <!-- section4 -->
-                    <li class="menu-item {{ (request()->is('expance','reports')) ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->is('expance', 'reports') ? 'active' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class='menu-icon tf-icons bx bxs-user-account'></i>
                             <div data-i18n="Layouts">Accounts</div>
@@ -236,7 +237,6 @@
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
                     <!-- Content -->
-
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <!-- Basic Layout & Basic with Icons -->
                         {{ $slot }}
@@ -289,7 +289,7 @@
     <script type="text/javascript">
         window.livewire.on('closeModel', () => {
             $('#largeModal').modal('hide');
-            // $('#updateModal').modal('hide');
+            $('#deleteModal').modal('hide');
         });
     </script>
     <!-- build:js assets/vendor/js/core.js -->
@@ -297,8 +297,8 @@
     <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
     <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-
     <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->

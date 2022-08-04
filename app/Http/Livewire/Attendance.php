@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 
 class Attendance extends Component
 {
-    public $member_id, $date;
+    public $member_id, $date, $idforDelete;
     protected $rules = [
         'member_id' => 'Required',
         'date' => 'Required'
@@ -33,12 +33,25 @@ class Attendance extends Component
             ModelsAttendance::create($this->all());
             session()->flash('success', 'Attendance Successfully Inserted');
         }
+        $this->resetInputFields();
     }
 
-    public function deleteAttendance(int $var)
+    public function deleteAttendance(int $id)
     {
-        ModelsAttendance::where('id', $var)->delete();
+        $this->idforDelete = $id;
+    }
+
+    public function deleteAttendanceInfo()
+    {
+        ModelsAttendance::where('id', $this->idforDelete)->delete();
+        $this->emit('closeModel');
         session()->flash('danger', 'Successfully Attendance Deleted');
+    }
+
+    public function resetInputFields()
+    {
+        $this->member_id = '';
+        $this->date = '';
     }
 
 }
