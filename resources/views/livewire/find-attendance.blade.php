@@ -1,6 +1,6 @@
 <div>
     <div class="row">
-
+@include('toastrMgs')
         <div class="col-xl-12 mb-3">
             <div class="card">
                 <div class="card-body">
@@ -50,7 +50,7 @@
                                     <td><span class="badge bg-label-primary me-1">Present</span></td>
                                 </tr>
                                 @empty
-                                <tr><td>No Result</td></tr>
+                                <tr><td colspan="4" class="fw-bold text-danger">No Result <i class='bx bxs-file-find'></i></td></tr>
                             @endforelse
                         </tbody>
                     </table>

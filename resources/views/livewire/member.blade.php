@@ -87,7 +87,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
-                            <h2>Are youe Sure ?</h2>
+                            <h2>Are you Sure ?</h2>
                         </div>
                     </div>
                 </div>

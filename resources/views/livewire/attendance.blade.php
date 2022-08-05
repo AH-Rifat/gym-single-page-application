@@ -1,5 +1,4 @@
 <div>
-    @include('errorMgs')
     @include('toastrMgs')
     <div class="row">
         <div class="col-xl-12 mb-3">
@@ -93,7 +92,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col mb-3">
-                            <h2>Are youe Sure ?</h2>
+                            <h2>Are you Sure ?</h2>
                         </div>
                     </div>
                 </div>

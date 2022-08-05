@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 
 class Payment extends Component
 {
-    public $member_id, $amount, $payment_date, $note, $paginateValue = 10, $deleteId;
+    public $member_id, $amount, $payment_date, $note, $paginateValue = 10, $paymentId;
     protected $rules = [
         'member_id' => 'required',
         'amount' => 'required',
@@ -19,7 +19,7 @@ class Payment extends Component
     protected $paginationTheme = 'bootstrap';
     public function render()
     {
-        $data = ModelsPayment::orderBy('id', 'DESC')->paginate($this->paginateValue);
+        $data = ModelsPayment::whereYear('payment_date', date('Y'))->orderBy('id', 'DESC')->paginate($this->paginateValue);
         return view('livewire.payment', compact('data'));
     }
 
@@ -27,22 +27,43 @@ class Payment extends Component
     {
         $this->validate();
         $id = Member::find($this->member_id);
-        if ($id == null) {
-            dd('not found');
+        if ($id === null) {
+            session()->flash('danger', 'Member Not Found');
+        } else {
+            ModelsPayment::create($this->all());
+            session()->flash('success', 'Successfully Member Attendance');
         }
-        ModelsPayment::create($this->all());
-        session()->flash('success', 'Successfully Member Attendance');
     }
 
     public function deletePayment($id)
     {
-        $this->deleteId = $id;
+        $this->paymentId = $id;
+    }
+    public function editPayment($id)
+    {
+        $attendance = ModelsPayment::where('id', $id)->first();
+        $this->paymentId = $attendance->id;
+        $this->amount = $attendance->amount;
+        $this->payment_date = $attendance->payment_date;
+        $this->note = $attendance->note;
     }
 
     public function deletePaymentInfo()
     {
-        ModelsPayment::where('id', $this->deleteId)->delete();
+        ModelsPayment::where('id', $this->paymentId)->delete();
         $this->emit('closeModel');
         session()->flash('danger', 'Successfully Payment Deleted');
+    }
+
+    public function updatePaymentInfo()
+    {
+        $validatedData = $this->validate([
+            'amount' => 'required',
+            'payment_date' => 'required',
+        ]);
+        $member = ModelsPayment::find($this->paymentId);
+        $member->update($validatedData);
+        $this->emit('closeModel');
+        session()->flash('success', 'Successfully Updated');
     }
 }

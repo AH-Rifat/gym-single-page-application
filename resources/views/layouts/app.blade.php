@@ -290,6 +290,7 @@
         window.livewire.on('closeModel', () => {
             $('#largeModal').modal('hide');
             $('#deleteModal').modal('hide');
+            $('#editModal').modal('hide');
         });
     </script>
     <!-- build:js assets/vendor/js/core.js -->
@@ -300,7 +301,25 @@
     <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- endbuild -->
-
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "500",
+            "hideDuration": "3000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
     <!-- Vendors JS -->
 
     <!-- Main JS -->

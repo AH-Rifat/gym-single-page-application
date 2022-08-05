@@ -1,4 +1,5 @@
 <div>
+    @include('toastrMgs')
     <div class="row">
         <div class="col-xxl">
             <div class="card mb-4">
@@ -6,24 +7,35 @@
                     <h5 class="mb-0">Basic Layout</h5>
                 </div> --}}
                 <div class="card-body">
-                    <form>
+                    <form wire:submit.prevent="store">
                         <div class="row">
-                            <div class="col-sm-3 d-flex align-items-center justify-content-between">
-                                <label class="col-sm-3 col-form-label" for="basic-default-name">Name</label>
-                                <input type="text" class="form-control" id="basic-default-name"
-                                    placeholder="Enter Name">
+                            <div class="col-sm-3">
+                                <label class="col-sm-3 col-form-label">Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    placeholder="Enter Name" wire:model.lazy="name">
+                                @error('name')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="col-sm-3 d-flex align-items-center justify-content-between">
-                                <label class="col-sm-3 col-form-label" for="basic-default-company">Amount</label>
-                                <input type="number" class="form-control" id="basic-default-company"
-                                    placeholder="Enter Amount">
+                            <div class="col-sm-3">
+                                <label class="col-sm-3 col-form-label">Amount</label>
+                                <input type="number" class="form-control @error('amount') is-invalid @enderror"
+                                    placeholder="Enter Amount" wire:model.lazy="amount">
+                                @error('amount')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="col-sm-3 d-flex align-items-center justify-content-between">
-                                <label class="col-sm-3 col-form-label" for="basic-default-company">Date</label>
-                                <input type="date" class="form-control" id="basic-default-company">
+                            <div class="col-sm-3">
+                                <label class="col-sm-3 col-form-label">Date</label>
+                                <input type="date" class="form-control @error('date') is-invalid @enderror"
+                                    wire:model.lazy="date">
+                                @error('date')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="col-sm-3 d-flex align-items-center justify-content-between">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                            <div class="col-sm-3">
+                                <label class="col-sm-3 col-form-label mb-2"></label>
+                                <input type="submit" class="form-control btn btn-primary" value="save">
                             </div>
                         </div>
                     </form>
@@ -47,21 +59,103 @@
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            <tr>
-                                <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>Albert Cook</strong></td>
-                                <td>254124 TK</td>
-                                <td>22-01-2020</td>
-                                <td>
-                                    <a class="btn btn-success" href="javascript:void(0);"><i
-                                            class="bx bx-edit-alt "></i> Edit</a>
-                                    <a class="btn btn-danger" href="javascript:void(0);"><i class="bx bx-trash "></i>
-                                        Delete</a>
-                                </td>
-                            </tr>
+                            @forelse ($data as $item)
+                                <tr>
+                                    <td><i class="fab fa-angular fa-lg text-danger"></i>
+                                        <strong>{{ $item->name }}</strong>
+                                    </td>
+                                    <td>{{ $item->amount }} TK</td>
+                                    <td>{{ $item->date }}</td>
+                                    <td>
+                                        <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal"
+                                            href="javascript:void(0);" wire:click.lazy="editId({{ $item->id }})"><i class="bx bx-edit-alt "></i> Edit</a>
+                                            
+                                        <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                            href="javascript:void(0);"
+                                            wire:click.lazy="deleteId({{ $item->id }})"><i class="bx bx-trash "></i>
+                                            Delete</a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td>No Result</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+    {{-- Delete Modal --}}
+    <div wire:ignore.self class="modal fade" id="deleteModal" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog">
+            <form class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="backDropModalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <h2>Are you Sure ?</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" wire:click.prevent="deleteExpence" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {{-- edit Modal --}}
+    <div wire:ignore.self class="modal fade" id="editModal" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog">
+            <form class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="backDropModalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="col-sm-3 col-form-label">Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    placeholder="Enter Name" wire:model.lazy="name">
+                                @error('name')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label class="col-sm-3 col-form-label">Amount</label>
+                                <input type="number" class="form-control @error('amount') is-invalid @enderror"
+                                    placeholder="Enter Amount" wire:model.lazy="amount">
+                                @error('amount')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label class="col-sm-3 col-form-label">Date</label>
+                                <input type="date" class="form-control @error('date') is-invalid @enderror"
+                                    wire:model.lazy="date">
+                                @error('date')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" wire:click.prevent="updateExpence" class="btn btn-primary">Update</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
