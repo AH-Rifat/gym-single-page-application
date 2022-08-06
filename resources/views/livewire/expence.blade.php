@@ -47,7 +47,10 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <h5 class="card-header">All Expence</h5>
+                <div class="card-header d-flex justify-content-between">
+                    <h5>All Expence</h5>
+                    <input type="month" name="" class="form-control w-25" wire:model.prevent="month">
+                </div>
                 <div class="table-responsive text-nowrap">
                     <table class="table table-striped text-center">
                         <thead class="table-primary">
@@ -68,8 +71,9 @@
                                     <td>{{ $item->date }}</td>
                                     <td>
                                         <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal"
-                                            href="javascript:void(0);" wire:click.lazy="editId({{ $item->id }})"><i class="bx bx-edit-alt "></i> Edit</a>
-                                            
+                                            href="javascript:void(0);" wire:click.lazy="editId({{ $item->id }})"><i
+                                                class="bx bx-edit-alt "></i> Edit</a>
+
                                         <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
                                             href="javascript:void(0);"
                                             wire:click.lazy="deleteId({{ $item->id }})"><i class="bx bx-trash "></i>
@@ -78,11 +82,13 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td>No Result</td>
+                                    <td colspan="5" class="fw-bold text-danger">No Result <i
+                                            class='bx bxs-file-find'></i></td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
+                    {{ $data->links() }}
                 </div>
             </div>
         </div>
