@@ -32,6 +32,7 @@ return new class extends Migration
             $table->bigInteger('total');
             $table->bigInteger('paid');
             $table->bigInteger('due')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }
