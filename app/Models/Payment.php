@@ -15,4 +15,8 @@ class Payment extends Model
     {
         return $this->belongsTo(Member::class, 'member_id');
     }
+
+    protected $casts = [
+        'payment_date' => 'immutable_date',
+    ];
 }
