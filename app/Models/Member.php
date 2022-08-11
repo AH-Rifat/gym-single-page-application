@@ -10,7 +10,12 @@ class Member extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','email','dob','age','height','weight','work','bloodGroup','gender','address','mobile',
-        'nationalId','photo','package','total','paid','due'
+        'name', 'email', 'dob', 'age', 'height', 'weight', 'work', 'bloodGroup', 'gender', 'address', 'mobile',
+        'nationalId', 'photo', 'package', 'total', 'paid', 'due'
     ];
+
+    public function lastDate()
+    {
+        return $this->hasOne(Payment::class)->ofMany('payment_date', 'max');
+    }
 }
