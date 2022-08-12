@@ -12,8 +12,10 @@
     </title>
 
     <meta name="description" content="" />
-
+    @vite('resources/js/app.js')
     @livewireStyles
+    
+    <script src="{{ asset('js/app.js') }}"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
 
@@ -285,7 +287,9 @@
     <!-- / Layout wrapper -->
 
     <!-- Core JS -->
+    
     @livewireScripts
+    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
     <script type="text/javascript">
         window.livewire.on('closeModel', () => {
             $('#largeModal').modal('hide');
