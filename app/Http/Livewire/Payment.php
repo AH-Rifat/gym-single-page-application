@@ -29,10 +29,20 @@ class Payment extends Component
         $id = Member::find($this->member_id);
         if ($id === null) {
             session()->flash('danger', 'Member Not Found');
-        } else {
-            ModelsPayment::create($this->all());
-            session()->flash('success', 'Successfully Member Attendance');
+            return back();
         }
+
+        $data = ModelsPayment::where('member_id', $this->member_id)->get();
+        foreach ($data as $value) {
+            if (date('Y-m', strtotime($this->payment_date)) == $value->payment_date->format('Y-m')) {
+                session()->flash('danger', 'Member Already Paid');
+                return back();
+            }
+        }
+
+        ModelsPayment::create($this->all());
+        session()->flash('success', 'Successfully Member Attendance');
+        $this->resetInputFields();
     }
 
     public function deletePayment($id)
@@ -65,5 +75,14 @@ class Payment extends Component
         $member->update($validatedData);
         $this->emit('closeModel');
         session()->flash('success', 'Successfully Updated');
+        $this->resetInputFields();
+    }
+
+    public function resetInputFields()
+    {
+        $this->member_id = ''; 
+        $this->amount = ''; 
+        $this->payment_date = ''; 
+        $this->note = '';
     }
 }
