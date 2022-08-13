@@ -157,14 +157,6 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Date</label>
-                                <input type="date"class="form-control @error('payment_date') is-invalid @enderror"
-                                    wire:model.lazy="payment_date">
-                                @error('payment_date')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
                                 <label class="form-label">Note</label>
                                 <textarea class="form-control" wire:model.lazy="note" placeholder="Note ( Optional )"></textarea>
                             </div>
