@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Member;
 use App\Models\Payment;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Home extends Component
 {
@@ -12,16 +13,21 @@ class Home extends Component
     public $totalPaidMembers;
     public $totalUnpaidMembers;
     public $totalDeactiveMembers;
+    public $show, $totalAmount, $paginateValue;
+
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     
     public function render()
     {
-        return view('livewire.home');
+        $paidInfo =Payment::whereYear('payment_date', date('Y'))->whereMonth('payment_date', date('m'))->paginate($this->paginateValue);
+        return view('livewire.home', compact('paidInfo'));
     }
 
     public function mount()
     {
         $this->totalMembers = count(Member::all());
-        $this->totalPaidMembers = Member::where('status', 1)->count();
+        $this->totalPaidMembers = Member::where('status', 1)->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->count();
         $this->totalUnpaidMembers = Member::where('status', 0)->count();
         $this->totalDeactiveMembers = Member::where('status', 2)->count();
         $this->status();
@@ -46,5 +52,16 @@ class Home extends Component
                 Member::where('id', $members->id)->update(['status' => 2]);
             }
         }
+    }
+
+    public function viewPaidMembers()
+    {
+        $this->show = 'paid';
+        $this->totalAmount =Payment::whereYear('payment_date', date('Y'))->whereMonth('payment_date', date('m'))->sum('amount');
+    }
+
+    public function viewUnpaidMembers()
+    {
+        $this->show = 'unpaid';
     }
 }
