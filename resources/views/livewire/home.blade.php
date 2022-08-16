@@ -3,6 +3,8 @@
         @include('livewire.reports.paid')
     @elseif ($show == 'unpaid')
         @include('livewire.reports.unPaid')
+    @elseif ($show == 'deactive')
+        @include('livewire.reports.deactive')
     @else
         <div class="row">
             <div class="col-lg-3">
@@ -39,7 +41,7 @@
                     <div class="card-body">
                         <span class="d-block mb-2">De-active Members</span>
                         <div class="text-nowrap fs-2 mb-2">{{ $totalDeactiveMembers }}</div>
-                        <small class="fw-semibold fs-6" style="cursor: pointer;">view more</small>
+                        <small class="fw-semibold fs-6" wire:click.lazy="viewDeactiveMembers" style="cursor: pointer;">view more</small>
                     </div>
                 </div>
             </div>
