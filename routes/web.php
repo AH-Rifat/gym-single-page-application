@@ -11,11 +11,17 @@ use App\Http\Livewire\Reports;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', Home::class);
-Route::get('/registration', Member::class);
-Route::get('/payment', Payment::class);
-Route::get('/payment_list', PaymentList::class);
-Route::get('/attendance', Attendance::class);
-Route::get('/find_attendance', FindAttendance::class);
-Route::get('/expance', Expence::class);
-Route::get('/reports', Reports::class);
+Route::middleware('auth')->group(function () {
+    Route::get('/home', Home::class);
+    Route::get('/registration', Member::class);
+    Route::get('/payment', Payment::class);
+    Route::get('/payment_list', PaymentList::class);
+    Route::get('/attendance', Attendance::class);
+    Route::get('/find_attendance', FindAttendance::class);
+    Route::get('/expance', Expence::class);
+    Route::get('/reports', Reports::class);
+});
+
+Route::get('/', function () {
+    return view('auth.login');
+})->middleware('guest');
