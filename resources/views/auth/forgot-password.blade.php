@@ -8,16 +8,16 @@
                     <span class="app-brand-logo demo"></span>
                     <span class="app-brand-text demo text-body fw-bolder">Gym Software</span>
                 </a>
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
             </div>
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
             <!-- /Logo -->
             <h4 class="mb-2">Forgot Password? 🔒</h4>
             <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
-            <form id="formAuthentication" class="mb-3" action="{{ route('password.email') }}" method="POST">
+            <form id="formAuthentication" class="mb-3" action="{{ route('password.request') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
