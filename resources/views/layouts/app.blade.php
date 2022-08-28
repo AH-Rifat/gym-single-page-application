@@ -14,7 +14,7 @@
     <meta name="description" content="" />
     @vite('resources/js/app.js')
     @livewireStyles
-    
+
     <script src="{{ asset('js/app.js') }}"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
@@ -121,12 +121,12 @@
                         </a>
 
                         <ul class="menu-sub">
-                            <li class="menu-item">
+                            <li class="menu-item {{ request()->is('payment') ? 'active' : '' }}">
                                 <a href="/payment" class="menu-link">
                                     <div data-i18n="Without menu">Add Payment</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
+                            <li class="menu-item {{ request()->is('payment_list') ? 'active' : '' }}">
                                 <a href="/payment_list" class="menu-link">
                                     <div data-i18n="Without navbar">Payment List</div>
                                 </a>
@@ -197,7 +197,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">John Doe</span>
+                                                    <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
@@ -222,10 +222,17 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="auth-login-basic.html">
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
                                             <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            class="d-none">
+                                            @csrf
+                                        </form>
                                     </li>
                                 </ul>
                             </li>
@@ -287,9 +294,10 @@
     <!-- / Layout wrapper -->
 
     <!-- Core JS -->
-    
+
     @livewireScripts
-    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>
+    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
+        data-turbolinks-eval="false" data-turbo-eval="false"></script>
     <script type="text/javascript">
         window.livewire.on('closeModel', () => {
             $('#largeModal').modal('hide');
