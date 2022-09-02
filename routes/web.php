@@ -8,6 +8,7 @@ use App\Http\Livewire\Member;
 use App\Http\Livewire\Payment;
 use App\Http\Livewire\PaymentList;
 use App\Http\Livewire\Reports;
+use App\Http\Livewire\UserProfile;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/find_attendance', FindAttendance::class);
     Route::get('/expance', Expence::class);
     Route::get('/reports', Reports::class);
+    Route::get('/user-profile', UserProfile::class);
 });
 
 Route::get('/', function () {
