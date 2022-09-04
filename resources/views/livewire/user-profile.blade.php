@@ -5,7 +5,12 @@
                 <div class="card-body">
                     <h3 class="card-title">Profile Photo</h3>
                     <div class="text-center">
-                        <img src="{{ asset('assets/img/avatars/6.png') }}" class="img-fluid rounded" alt="user-photo">
+                        @if ($photo)
+                            <img src="{{ asset('storage/' . $photo) }}" class="img-fluid rounded" alt="user-photo">
+                        @else
+                            <img wire:ignore.self src="{{ asset('assets/img/avatars/8.png') }}" class="img-fluid rounded"
+                                alt="user-photo">
+                        @endif
                     </div>
                 </div>
             </div>
@@ -30,8 +35,7 @@
                 </ul>
                 <div class="tab-content">
                     @include('toastrMgs')
-                    <div wire:ignore.self class="tab-pane fade show active" id="navs-pills-top-profile" role="tabpanel"
-                        wire.ignore.self>
+                    <div wire:ignore.self class="tab-pane fade show active" id="navs-pills-top-profile" role="tabpanel">
                         <form wire:submit.prevent="updateProfile" method="POST">
                             @csrf
                             <div class="row mb-3">
@@ -122,8 +126,3 @@
         </div>
     </div>
 </div>
-@push('js')
-    <script>
-        Livewire.on('nameUpdated')
-    </script>
-@endpush
