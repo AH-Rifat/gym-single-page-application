@@ -30,18 +30,18 @@
                             <small>Forgot Password?</small>
                         </a>
                     </div>
-                    <div class="input-group input-group-merge">
+                    <div class="input-group input-group">
                         <input type="password" id="password" class="form-control @error('password') is-invalid @enderror"
                             name="password"
                             placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                             aria-describedby="password" />
+                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
 
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                     </div>
                 </div>
                 <div class="mb-3">
