@@ -6,7 +6,7 @@
                     <h3 class="card-title">Profile Photo</h3>
                     <div class="text-center">
                         @if ($photo)
-                            <img src="{{ asset('storage/' . $photo) }}" class="img-fluid rounded" alt="user-photo">
+                            <img wire:ignore.self src="{{ asset('storage/' . $photo) }}" class="img-fluid rounded" alt="user-photo">
                         @else
                             <img wire:ignore.self src="{{ asset('assets/img/avatars/8.png') }}" class="img-fluid rounded"
                                 alt="user-photo">
