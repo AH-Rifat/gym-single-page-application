@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('api_key');
             $table->string('type');
-            $table->integer('sender_id');
+            $table->bigInteger('sender_id');
             $table->timestamps();
         });
     }
