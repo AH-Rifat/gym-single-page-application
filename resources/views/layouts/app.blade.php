@@ -14,8 +14,6 @@
     <meta name="description" content="" />
     @vite('resources/js/app.js')
     @livewireStyles
-
-    <script src="{{ asset('js/app.js') }}"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
 
@@ -25,7 +23,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/boxicons.css') }}" />
@@ -74,7 +72,7 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
-                    <li class="menu-item {{ request()->is('/') ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->is('home') ? 'active' : '' }}">
                         <a href="/" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Home">Home</div>
@@ -95,20 +93,20 @@
                         </a>
                     </li>
                     <!-- section2 -->
-                    <li class="menu-item {{ request()->is('sms') ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->is('send_sms','sms_settings') ? 'active' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class='menu-icon tf-icons bx bx-envelope'></i>
                             <div data-i18n="SMS">SMS</div>
                         </a>
 
                         <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="" class="menu-link">
+                            <li class="menu-item {{ request()->is('send_sms') ? 'active' : '' }}">
+                                <a href="/send_sms" class="menu-link">
                                     <div data-i18n="Without menu">Send Sms</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="" class="menu-link">
+                            <li class="menu-item {{ request()->is('sms_settings') ? 'active' : '' }}">
+                                <a href="/sms_settings" class="menu-link">
                                     <div data-i18n="Without navbar">SMS Settings</div>
                                 </a>
                             </li>
@@ -142,7 +140,7 @@
                         </a>
 
                         <ul class="menu-sub">
-                            <li class="menu-item">
+                            <li class="menu-item {{ request()->is('expance') ? 'active' : '' }}">
                                 <a href="/expance" class="menu-link">
                                     <div data-i18n="Without menu">Add Expence</div>
                                 </a>
@@ -182,20 +180,16 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
-                                    <div class="avatar avatar-online">
-                                        <img src="assets/img/avatars/1.png" alt
-                                            class="w-px-40 h-auto rounded-circle" />
-                                    </div>
+                                    <img src="assets/img/avatars/1.png" alt
+                                        class="w-px-40 h-auto rounded-circle" />
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
                                         <a class="dropdown-item" href="#">
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar avatar-online">
                                                         <img src="assets/img/avatars/1.png" alt
                                                             class="w-px-40 h-auto rounded-circle" />
-                                                    </div>
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <span class="fw-semibold d-block"

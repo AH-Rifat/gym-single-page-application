@@ -8,6 +8,8 @@ use App\Http\Livewire\Member;
 use App\Http\Livewire\Payment;
 use App\Http\Livewire\PaymentList;
 use App\Http\Livewire\Reports;
+use App\Http\Livewire\SendSms;
+use App\Http\Livewire\SmsSettings;
 use App\Http\Livewire\UserProfile;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +24,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/expance', Expence::class);
     Route::get('/reports', Reports::class);
     Route::get('/user-profile', UserProfile::class);
+    Route::get('/send_sms', SendSms::class);
+    Route::get('/sms_settings', SmsSettings::class);
 });
 
 Route::get('/', function () {
