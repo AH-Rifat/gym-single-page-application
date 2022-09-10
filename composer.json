@@ -1,5 +1,4 @@
 {
-    "name": "Gym Software",
     "type": "software",
     "description": "This software based on Laravel Framework.",
     "keywords": ["framework", "laravel","Livewire"],
