@@ -133,7 +133,7 @@
                         </ul>
                     </li>
                     <!-- section4 -->
-                    <li class="menu-item {{ request()->is('expance', 'reports') ? 'active' : '' }}">
+                    <li class="menu-item {{ request()->is('expance', 'revenue') ? 'active' : '' }}">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class='menu-icon tf-icons bx bxs-user-account'></i>
                             <div data-i18n="Layouts">Accounts</div>
@@ -145,9 +145,9 @@
                                     <div data-i18n="Without menu">Add Expence</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="/reports" class="menu-link">
-                                    <div data-i18n="Without navbar">All Reports</div>
+                            <li class="menu-item {{ request()->is('revenue') ? 'active' : '' }}">
+                                <a href="/revenue" class="menu-link">
+                                    <div data-i18n="Without navbar">Revenue</div>
                                 </a>
                             </li>
                         </ul>
