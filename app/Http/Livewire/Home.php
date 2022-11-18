@@ -39,19 +39,23 @@ class Home extends Component
     {
         $member = Member::all();
         foreach ($member as $members) {
-            $lastDate = $members->lastDate->payment_date->format('Y-m');
-            $threeMonthsBefore = $members->lastDate->payment_date->addMonths(3)->format('Y-m');
+            
+            if ($members->lastDate != null) {
 
-            if ($lastDate < now()->format('Y-m')) {
-                Member::where('id', $members->id)->update(['status' => 0]);
-            }
-
-            if ($lastDate == now()->format('Y-m')) {
-                Member::where('id', $members->id)->update(['status' => 1]);
-            }
-
-            if ($threeMonthsBefore < now()->format('Y-m')) {
-                Member::where('id', $members->id)->update(['status' => 2]);
+                $lastDate = $members->lastDate->payment_date->format('Y-m');
+                $threeMonthsBefore = $members->lastDate->payment_date->addMonths(3)->format('Y-m');
+    
+                if ($lastDate < now()->format('Y-m')) {
+                    Member::where('id', $members->id)->update(['status' => 0]);
+                }
+    
+                if ($lastDate == now()->format('Y-m')) {
+                    Member::where('id', $members->id)->update(['status' => 1]);
+                }
+    
+                if ($threeMonthsBefore < now()->format('Y-m')) {
+                    Member::where('id', $members->id)->update(['status' => 2]);
+                }
             }
         }
     }
