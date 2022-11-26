@@ -3,8 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\Member as ModelsMember;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class Member extends Component
@@ -12,7 +13,7 @@ class Member extends Component
     public $name, $email, $dob, $age, $height, $weight, $work, $bloodGroup, $gender, $address,
         $mobile, $nationalId, $photo, $package, $total, $paid, $due;
     public $editId, $memberIdForDelete;
-    use WithPagination;
+    use WithPagination, WithFileUploads;
     protected $paginationTheme = 'bootstrap';
     protected $rules = [
         'name' => 'required|',
@@ -27,7 +28,7 @@ class Member extends Component
         'address' => 'required|',
         'mobile' => 'required|',
         'nationalId' => 'required|',
-        // 'photo' => 'required|',
+        'photo' => 'required|max:1024|mimes:png,jpeg,gif',
         'package' => 'required|',
         'total' => 'required|',
         'paid' => 'required|',
@@ -63,8 +64,31 @@ class Member extends Component
 
     public function save()
     {
+        if (isset($this->photo)) {
+            $photoName = md5($this->photo . microtime()) . '.' . $this->photo->extension();
+            $this->photo->storeAs('memberPhotos', $photoName);
+        }
+        
         $this->validate();
-        ModelsMember::create($this->all());
+        ModelsMember::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'dob' => $this->dob,
+            'age' => $this->age,
+            'height' => $this->height,
+            'weight' => $this->weight,
+            'work' => $this->work,
+            'bloodGroup' => $this->bloodGroup,
+            'gender' => $this->gender,
+            'address' => $this->address,
+            'mobile' => $this->mobile,
+            'nationalId' => $this->nationalId,
+            'photo' => empty($photoName) ? NULL:$photoName,
+            'package' => $this->package,
+            'total' => $this->total,
+            'paid' => $this->paid,
+            'due' => $this->due,
+        ]);
         session()->flash('success', 'Successfully Registerd');
         $this->emit('closeModel');
         $this->resetInputFields();
@@ -109,7 +133,13 @@ class Member extends Component
 
     public function deleteMemberInfo()
     {
-        ModelsMember::where('id', $this->memberIdForDelete)->delete();
+        $member = ModelsMember::find($this->memberIdForDelete);
+
+        if (Storage::exists('memberPhotos/'.$member->photo)) {
+            Storage::delete('memberPhotos/'.$member->photo);
+        }
+        $member->delete();
+
         $this->emit('closeModel');
         session()->flash('danger', 'Successfully Member Deleted');
     }
